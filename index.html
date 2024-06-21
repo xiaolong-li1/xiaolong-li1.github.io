@@ -24,7 +24,9 @@
         }
 
         .header {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 20px;
         }
 
@@ -41,6 +43,12 @@
             color: #0066cc;
             text-decoration: none;
         }
+
+        /* .header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        } */
 
         section {
             margin-bottom: 20px;
@@ -86,9 +94,11 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>XiaoLong Li</h1>
-            <img src="XiaoLong.jpg" alt="XiaoLong Li's photo" style="max-width: 30%; height: auto; float: right; margin-left: 10px; margin-bottom: 10px;">
-            <p><a href="tel:8615836992650">+86 158 369 9250</a> | <a href="mailto:15836992650@163.com">15836992650@163.com</a> | <a href="https://github.com/xiaolong-li1">GitHub</a> | <a href="https://arasgungore.github.io">Portfolio</a></p>
+            <div>
+                <h1>XiaoLong Li</h1>
+                <p><a href="tel:8615836992650">+86 158 369 9250</a> | <a href="mailto:15836992650@163.com">15836992650@163.com</a> | <a href="https://github.com/xiaolong-li1">GitHub</a> | <a href="https://arasgungore.github.io">Portfolio</a></p>
+            </div>
+            <img src="XiaoLong.jpg" alt="XiaoLong Li's photo" style="max-width: 13%; height: auto; float: right; margin-right: 10px;margin-top: 20px; margin-bottom: 0px;">
         </div>
 
 
@@ -98,7 +108,8 @@
                 <div class="school-name">Harbin Institute of Technology</div>
                 <div class="date">Sep 2022 - Jun 2024(Sophomore)</div>
                 <div>B.Sc. in Artificial Intelligence; GPA: 3.876/4.00</div>
-                <div>Minor Degree in Statistics; Sep 2023 - Jun 2024</div>
+                <div class="date">Sep 2023 - Jun 2024</div>
+                <div>Minor Degree in Statistics;</div>
             </div>
         </section>
 
@@ -144,7 +155,7 @@
             <div class="item">
                 <div class="project-title"><a href="https://github.com/xiaolong-li1/wx_avatar">Avatar_decorator</a></div>
                 <ul>
-                    <li>My first attempt at creating a WeChat mini program (the image quality exported from the school's mini program was too poor... I figured out that exporting in high quality shouldn't that complicated).So comes this project.Just for fun</li>
+                    <li>My first attempt at creating a WeChat mini program (the image quality exported from the school's mini program was too poor... I figured out that exporting in high quality shouldn't that complicated).Then comes this project.Just for fun</li>
                 </ul>
             </div>
              <div class="item">
