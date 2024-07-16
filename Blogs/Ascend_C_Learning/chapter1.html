@@ -4,46 +4,35 @@
     <meta charset="UTF-8">
     <title>算子工程学习记录(初学，持续更新中)</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        pre {
-            background-color: #f5f5f5;
-            padding: 10px;
-            border: 1px solid #ccc;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-        }
-        .code {
-            font-family: monospace;
-            color: #0000ff;
-        }
-        .comment {
-            color: #009000;
-        }
-        .string {
-            color: #d14;
-        }
-        .number {
-            color: #1a69b0;
-        }
-        .punct {
-            color: #969696;
-        }
-        .delim {
-            color: #1469b0;
-        }
-        .keyword {
-            color: #0000ff;
-        }
-        .frame {
-            border: 1px solid #ccc;
-            background-color: #f5f5f5;
-            padding: 5px;
-        }
-        img {
-            width: 100%;
-        }
+figure {
+    display: block;
+    text-align: center; /* 将文本居中对齐 */
+    margin: 0 auto; /* 如果需要，还可以将整个figure元素在其父容器中居中 */
+}
+
+figcaption {
+    margin-top: 8px; /* 根据需要调整，为figcaption上方提供一些空间 */
+}
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #4e4d4d, #5a6f82);
+        color: #f5f5f5;
+        font-size: 18px;
+    }
+    img {
+        width: 50%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    pre, .frame {
+    background: linear-gradient(to right, #4e4d4d, #47617a);
+    color: #f5f5f5; /* 为了保证在深色背景上文字可见，将字体颜色改为浅色 */
+}
+    .code, .comment, .string, .number, .punct, .delim, .keyword {
+        color: #e4dede; /* 调整为深灰色，以适应浅灰色背景 */
+    }
+</style>
     </style>
 </head>
 <body>
