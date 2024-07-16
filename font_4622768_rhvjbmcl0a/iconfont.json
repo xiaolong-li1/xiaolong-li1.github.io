@@ -1,0 +1,30 @@
+{
+  "id": "4622768",
+  "name": "HomePage",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5832619",
+      "name": "clover",
+      "font_class": "clover",
+      "unicode": "e68b",
+      "unicode_decimal": 59019
+    },
+    {
+      "icon_id": "12579639",
+      "name": "blog",
+      "font_class": "blog",
+      "unicode": "e7c6",
+      "unicode_decimal": 59334
+    },
+    {
+      "icon_id": "2019078",
+      "name": "简历",
+      "font_class": "jianli",
+      "unicode": "e7b5",
+      "unicode_decimal": 59317
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Index</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            color: #f0f0f0; /* 浅色文本 */
+        }
+        .blog-list {
+            list-style: none;
+            padding: 0;
+        }
+        .blog-list li {
+            margin-bottom: 10px;
+        }
+        .blog-list a {
+            text-decoration: none;
+            color: #a9d6e5; /* 浅蓝色链接 */
+        }
+        .blog-list a:hover {
+            text-decoration: underline;
+            color: #89c2d9; /* 鼠标悬停时的颜色 */
+        }
+        .chapter-list {
+            display: none;
+            list-style: none;
+            padding-left: 20px;
+        }
+        .content {
+            background: radial-gradient(#313131,#0a0a0a);
+        }
+    </style>
+</head>
+<body class="content">
+    <h1>Blog Index</h1>
+    <ul class="blog-list">
+        <li>
+            <a href="javascript:void(0)" onclick="toggleChapters('ascend_c_chapters')">Blog Ascend_C_Learning</a>
+            <ul id="ascend_c_chapters" class="chapter-list">
+                <li><a href="./Ascend_C_Learning/chapter1.html">Chapter 1</a></li>
+                <li><a href="./Ascend_C_Learning/chapter2.html">Chapter 2</a></li>
+                <li><a href="./Ascend_C_Learning/chapter3.html">Chapter 3</a></li>
+                <!-- 更多章节链接 -->
+            </ul>
+        </li>
+        <li><a href="path/to/blog2.html">Blog Post 2</a></li>
+        <li><a href="path/to/blog3.html">Blog Post 3</a></li>
+        <!-- 更多博客链接 -->
+    </ul>
+
+    <script>
+        function toggleChapters(chapterListId) {
+            var chapters = document.getElementById(chapterListId);
+            if (chapters.style.display === "none") {
+                chapters.style.display = "block";
+            } else {
+                chapters.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
