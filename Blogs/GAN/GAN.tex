@@ -65,7 +65,7 @@
 \subsection{数学推导}
 推荐文章:https://www.cnblogs.com/LXP-Never/p/9706790.html
 \section{Code}
-\href{run:GAN.ipynb}{点击这里查看代码文件}
+\href{run:GAN.ipynb}{点击这里查看代码文件:https://xiaolong-li1.github.io/Blogs/GAN.ipynb}
 \subsubsection{(1):伪代码:}
 \begin{algorithm}
 	
@@ -227,10 +227,19 @@ $p(z|x)$根据上述假设，没法直接求出来，不过可以用正态分布
 就是得选一个好的解码器f能让$\hat{x}=x$的概率最高。\\
 综合一下,就是要优化这个：\begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/screenshot016}
+	\includegraphics[width=0.8\linewidth]{images/screenshot016}
 	\label{fig:screenshot016}
 \end{figure}
 \FloatBarrier
-证明完毕
-
+期望就在多轮的训练中间接实现，前后项可以加上一个权重，结合我们的假设，这就得到loss函数
+\begin{align}
+	Loss = \left\|x - \hat{x}\right\|^{2} + KL\left[\mathcal{N}(g(x), h(x)), \mathcal{N}(0, 1)\right]
+\end{align}
+另外，通过把KL散度的计算按照定义展开，再根据高斯分布的性质化简，可得：
+\begin{align}
+	KL(q(z|x) \parallel p(z)) = \frac{1}{2} \sum_{j=1}^{J} \left( \log(\sigma_j^2) + 1 - \sigma_j^2 - \mu_j^2 \right)
+\end{align}
+Note:\href{https://www.zywvvd.com/notes/study/probability/elbo/elbo/}{关于ELBO的文章:https://www.zywvvd.com/notes/study/probability/elbo/elbo/}
+\section{Code:}
+\href{./VAE.ipynb}{点击这里查看代码文件(https://xiaolong-li1.github.io/Blogs/VAE.ipynb)}
 \end{document}
