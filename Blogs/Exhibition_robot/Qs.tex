@@ -1,12 +1,16 @@
 \documentclass[]{article}
 \usepackage{ctex}
 %opening
+\usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{xcolor}
 \usepackage{listings}
 \title{}
 \author{}
+
+
+\definecolor{mycolor}{RGB}{255,0,255}
 \lstset{
 	language=Python,
 	breaklines=true, % 允许自动换行
@@ -113,8 +117,11 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 	\end{itemize}
 	\subsection{不确定的地方}
 \begin{itemize}
-	\item \underline{iat\_web\_api是做什么的，参数什么意思?}
-	\item \underline{ding有什么特殊的含义吗？}
+	\item \textbf{ iat\_web\_api是做什么的，参数什么意思?}\\
+	这个iat是用于语音识别的，就是语音转文本（Intelligent Audio Transcription）
+	\item \textbf{ding有什么特殊的含义吗？}\\
+	ding是提示音,提醒用户录音开始了。
+	
 \end{itemize}
 \section{Pardon}
 
@@ -141,12 +148,16 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 	\item 使用了 \texttt{listenuser} 和 \texttt{text2speech} 两个外部函数来分别处理语音输入和输出。
 	\item 特殊标记 '\#\#\#\#' 用于特定逻辑处理，例如用户超时未回应时的处理。
 \end{itemize}
-\subsection{\underline{不理解的地方}}
+\subsection{不理解的地方}
 \begin{itemize}
-	\item 用户超过 6 秒没有说话就询问一遍在代码里哪里体现？
-	\item \#\#\#\#是代填充的唤醒词吗？
-	\item QAING这个状态有什么作用？
-	\item 最后一个else是处理什么情况的？
+	\item 用户超过 6 秒没有说话就询问一遍在代码里哪里体现？\\
+	\textbf{listener那个函数的接口里有录音10秒左右，也就是等待时间了。}
+	\item \#\#\#\#是代填充的唤醒词吗？\\
+	\textbf{可以理解为唤醒词的标志}
+	\item QAING这个状态有什么作用？\\
+\textbf{	qaing的意思是正在qa（问答），如果set为True，那么将不会处理打断的信号。可以理解为一个linux里面的信号锁}
+	\item 最后一个else是处理什么情况的？\\
+\textbf{	就是没录到东西并且repeat count不是0的时候才会进入第三个分支，等待被打断，机器人说完提示词10秒内不回答，机器人就会卡在这等待人再用唤醒词（打断词）唤醒它}
 \end{itemize}
 	\section{QAClass}
 	
@@ -164,12 +175,34 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 	\subsection{\underline{我不理解的地方}}
 \begin{itemize}
 	\item \texttt{STATUS} 和 \texttt{get\_llm\_answer} 函数的具体实现和作用。（还包括 \texttt{llmclass} 的 \texttt{if\_document\_searched}， \texttt{process\_query} 这些）
-	\item 816行，\texttt{text2speech("?")}，这个问号怎么也能转语音
+	\item \textcolor{mycolor}{self.llmclass.process\_query这个函数的返回结果是什么格式，有什么样例吗？流式和非流式的方式中，回答都是一次产生的，但是流式返回是按半句话来读，还能用非阻塞的方式节省时间，非流式是一次读完全部的回答是这个意思吗？}
+	\item 816行，\texttt{text2speech("?")}，这个问号怎么也能转语音\\
+	\textbf{是为了保证打断，因为我们的打断是上一句.前面都是异步播放，本句后面没有下一句的话，播放过程不会被打断因此得手动加一句话。}
 	\item \texttt{interrupt\_stream} 和 \texttt{STATUS} 里的 \texttt{interrupt} 什么区别，为什么要加上这个？
+	\begin{itemize}
+		\item \texttt{STATUS.is\_interrupted}
+		
+		\texttt{STATUS.is\_interrupted} 就是指用户有没有用唤醒词打断机器人，这个变量在整个流程中都非常重要。
+		
+		\item \texttt{self.interrupt\_stream}
+		
+		我们假设用户提出了问题，大模型正在流式生成回答并且播音。
+		
+		\begin{enumerate}
+			\item 如果此时用户打断了机器人，那么就会立刻切断对大模型流式生成回答的播音，然后播放提示语“我在”或“大家有什么问题吗”。
+			\item 如果用户从始至终都没有打断，那么就会把大模型生成的回答全部播放完毕。
+		\end{enumerate}
+		
+		由于我们让大模型在回答问题时，最后几句话要引导用户继续下达指令，所以效果是这样的：比如用户提出问题，大模型的回答可能是：“......以上就是天宫二号的发射过程，您还有其他关于空间实验室的问题吗？”或者“......长征二号的故事我讲完了，如果您还对其他火箭感兴趣，可以让我带您参观运载火箭展区”，如此一来，就不需要再播放“我在”或“大家有什么问题吗”这类提示语。
+		
+		因此 \texttt{self.interrupt\_stream} 的含义是大模型生成的回答是否被完整播放完。
+		
+		而 \texttt{self.interrupt\_stream} 的作用是控制提示语的播放：如果大模型生成的回答没有被播放完，而是被打断了，那么 \texttt{self.interrupt\_stream} 为 \texttt{True}，需要播放提示语；如果大模型生成的回答被完整播完了，没有被打断，那么大模型会自己生成一些引导用户提问的话，其作用相当于提示语，此时 \texttt{self.interrupt\_stream} 为 \texttt{False}，不需要播放我们写死的提示语。
+	\end{itemize}
 	\item 853行 \texttt{if self.interrupt\_stream:}\\
 	\texttt{sleep(0.05)}\\
 	\texttt{STATUS.set\_is\_Interrupted(False)}\\
-	没看明白
+	\textcolor{mycolor}{依旧没看明白，为什么等了0.05秒就给这个状态消除了，受到打断产生interrupt\_stream这个信号为什么只需要维持0.05秒？}
 \end{itemize}
 \section{Interruption Class}
 \subsection{continue\_rotate}
@@ -202,11 +235,11 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 	\end{itemize}
 	\item \textbf{\underline{一些不理解的地方:}}
 	\begin{itemize}
-		\item Twist的z的角速度是往哪里转向的？STATUS.HANDHELD\_DETECT and not STATUS.HANDHELD\_DETECT\_FLAG，这两个变量是谁设置的，什么含义？
+		\item \textcolor{mycolor}{Twist的z的角速度是往哪里转向的？(左右还是抬头低头)STATU \\ S.HANDHELD\_DETECT和 STATUS.HANDHELD\_DETECT\_FLAG，这两个变量是谁设置的，什么含义？}
 		\item 
 		STATUS.set\_Big\_Face\_Area(None) 什么叫Big\_Face\_Area
 		\\答:Big\_Face\_Area:str = "LEFT",                     \# robot检测到的人脸区域
-		\item 手持麦克风检测是怎么回事？哪里有手持麦克风？是检测到手持麦克风就是转到正对观众的方向了吗？
+		\item \textcolor{mycolor}{手持麦克风检测是怎么回事？哪里有手持麦克风？是检测到手持麦克风就是转到正对观众的方向了吗？}
 	\end{itemize}
 \end{itemize}
 \subsection{do\_action\_rely\_instruction}
@@ -243,7 +276,7 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 				if STATUS.NAVI_END_FLAG == 'success':
 				STATUS.set_NAVI_END_FLAG(None)
 				break
-		\end{verbatim}这里的NAVI\_END\_FLAG看定义应该为bool类型，为什么这里还能和字符串比较？     
+		\end{verbatim}\textcolor{mycolor}{这里的NAVI\_END\_FLAG看定义应该为bool类型，为什么这里还能和字符串比较？}     
 	\end{itemize}
 \end{itemize}
 \subsection{handle\_interrupt}
@@ -275,12 +308,14 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 			\item 如果任务类型仍为 \texttt{qa}，生成答案并播音。如果启用了动作执行，启动动作执行线程并等待其完成。
 		\end{itemize}
 	\end{enumerate}
-	\item \textbf{\underline{不理解的地方}}
+	\item \textbf{\textcolor{mycolor}{不理解的地方}}
 	\begin{itemize}
 		\item name = self.get\_self\_name() 什么时候能返回InterruptClass以及多个class？
 		\item self.pre\_next\_situation = False这个属性是什么？
 		\item STATUS.Touchpad\_Area == 'NowIsInterrupted'
 \\		STATUS.set\_Touchpad\_Area('NowIgnoreTouchpad')这两种状态什么含义
+		\item 什么情况下需要把QAing状态设置为true，为什么？
+		\item 为什么这里的clear都是true,没见到修改clear的操作
 	\end{itemize}
 \end{itemize}
 \end{document}
