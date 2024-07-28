@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="css/index.css">
   <script src="js/vue.min.js" language="JavaScript"></script>
 </head>
-
 <body>
   <main>
     <div class="content content-main">
@@ -67,5 +66,19 @@
     }
   })
 </script>
-
+<div id="container1"></div>
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+var gitment = new Gitment({
+id: '页面 ID', // 可选。默认为 location.href
+owner: 'xiaolong-li1',
+repo: 'https://github.com/xiaolong-li1/wx_avatar.git',
+oauth: {
+    client_id: 'Ov23liSln1EyVnU2MYGg',
+    client_secret: 'dde3541dfc4dbb6eecd7ddf96739719c675af578',
+},
+})
+gitment.render('container1')
+</script>
 </html>
