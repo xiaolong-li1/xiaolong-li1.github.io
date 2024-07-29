@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.5.18)  26 JUL 2024 21:00
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.5.18)  29 JUL 2024 15:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -645,32 +645,130 @@ tt/m/n/10.53937 llmclass
  []
 
 [8]
-Overfull \hbox (50.26134pt too wide) in paragraph at lines 200--201
+Overfull \hbox (50.26134pt too wide) in paragraph at lines 202--203
 \TU/SimSun(0)/m/n/10.53937 模 型 生 成 的 回 答 没 有 被 播 放 完，|  而 是 被 打 断 了，|  那 么 \TU/
 lmtt/m/n/10.53937 self.interrupt_stream
  []
 
 [9]
-Overfull \hbox (39.36765pt too wide) in paragraph at lines 238--240
+Overfull \hbox (35.5757pt too wide) in paragraph at lines 212--213
+\TU/SimSun(0)/m/n/10.53937 函 数 的 播 音 后，|  就 会 跳 出 \TU/lmtt/m/n/10.53937 answer_
+question \TU/SimSun(0)/m/n/10.53937 函 数，|  继 续 进 行 \TU/lmtt/m/n/10.53937 handle
+_interrupt
+ []
+
+[10]
+Overfull \hbox (39.36765pt too wide) in paragraph at lines 247--250
 \TU/lmr/m/n/10.53937 S.HANDHELD_DETECT \TU/SimSun(0)/m/n/10.53937 和 \TU/lmr/m/n
 /10.53937 STATUS.HANDHELD_DETECT_FLAG\TU/SimSun(0)/m/n/10.53937 ，|
  []
 
-[10] [11] [12] [13] (Qs.aux)
+
+Overfull \hbox (55.05315pt too wide) in paragraph at lines 247--250
+\TU/SimSun(0)/b/n/10.53937 答：|  \TU/lmr/m/n/10.53937 z \TU/SimSun(0)/m/n/10.539
+37 的 角 速 度 是 指 左 右 转，| \TU/lmr/m/n/10.53937 z \TU/SimSun(0)/m/n/10.53937 轴 是 垂 
+直 于 地 面 的 轴。| \TU/lmtt/m/n/10.53937 STATUS.HANDHELD_DETECT
+ []
+
+
+Overfull \hbox (25.21255pt too wide) in paragraph at lines 247--250
+\TU/SimSun(0)/m/n/10.53937 是 指 识 别 手 持 麦 克 风 的 功 能 是 否 开 启。| \TU/lmtt/m/n/10.53
+937 STATUS.HANDHELD_DETECT_FLAG
+ []
+
+[11] [12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 327--328
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 331--332
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 335--337
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 340--341
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 344--345
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 347--349
+
+ []
+
+[16]
+Overfull \hbox (38.6274pt too wide) in paragraph at lines 359--360
+\TU/SimSun(0)/m/n/10.53937 并 初 始 化 障 碍 物 状 态 为 无 障 碍 \TU/lmr/m/n/10.53937 (‘STA
+TUS.set_is_Depth_Obstacle(False)‘
+ []
+
+
+Overfull \hbox (8.08319pt too wide) in paragraph at lines 388--389
+[]\TU/SimSun(0)/m/n/10.53937 如 果 导 航 成 功 到 达 目 标 点 \TU/lmr/m/n/10.53937 (‘STATU
+S.NAVI_END_FLAG == ’suc-
+ []
+
+
+Overfull \hbox (78.60687pt too wide) in paragraph at lines 393--394
+[]\TU/SimSun(0)/m/n/10.53937 如 果 遇 到 障 碍 物 \TU/lmr/m/n/10.53937 (‘STATUS.is_Dep
+th_Obstacle‘ \TU/SimSun(0)/m/n/10.53937 或 \TU/lmr/m/n/10.53937 ‘STATUS.is_Yolo_
+Obstacle‘)\TU/SimSun(0)/m/n/10.53937 ，|
+ []
+
+[17]
+Overfull \hbox (0.92377pt too wide) in paragraph at lines 421--421
+ []    \TU/lmtt/m/n/10.53937 STATUS.set_Last_Area(STATUS.Current_Order_of_Visit
+[0])[] 
+ []
+
+
+Overfull \hbox (7.93713pt too wide) in paragraph at lines 422--426
+[]\TU/lmr/m/n/10.53937 1: \TU/SimSun(0)/m/n/10.53937 这 里 的\TU/lmr/m/n/10.53937 
+”sleep(0.1) # \TU/SimSun(0)/m/n/10.53937 防 止 \TU/lmr/m/n/10.53937 self.handle_i
+nterrupt() \TU/SimSun(0)/m/n/10.53937 太 快，|  在 \TU/lmr/m/n/10.53937 text2speech
+
+ []
+
+
+Overfull \hbox (6.94176pt too wide) in paragraph at lines 422--426
+\TU/lmr/m/n/10.53937 3:STATUS.set_Last_Area(STATUS.Current_Order_of_Visit[0]) \
+TU/SimSun(0)/m/n/10.53937 是 做
+ []
+
+
+Overfull \hbox (3.51018pt too wide) in paragraph at lines 431--432
+[]\TU/lmr/m/n/10.53937 rospy.Subscriber(”ivw_chatter”, String, self.ivw_callbac
+k) \TU/SimSun(0)/m/n/10.53937 这 里 的 \TU/lmr/m/n/10.53937 sub-
+ []
+
+[18]
+File: screenshot002.png Graphic file (type bmp)
+<screenshot002.png>
+ [19] (Qs.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
  ***********
 Package rerunfilecheck Info: File `Qs.out' has not changed.
-(rerunfilecheck)             Checksum: A916D483C15FB0D6D1EA915D453D9AD1;2606.
+(rerunfilecheck)             Checksum: 7F7ED187C511544955564CDD81BEF000;3376.
  ) 
 Here is how much of TeX's memory you used:
- 15917 strings out of 409617
- 347912 string characters out of 5774013
+ 16031 strings out of 409617
+ 354515 string characters out of 5774013
  1941191 words of memory out of 5000000
- 37811 multiletter control sequences out of 15000+600000
+ 37924 multiletter control sequences out of 15000+600000
  564923 words of font info for 90 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 93i,6n,97p,380b,2020s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 93i,6n,97p,632b,2020s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on Qs.pdf (13 pages).
+Output written on Qs.pdf (19 pages).

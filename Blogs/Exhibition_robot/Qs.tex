@@ -175,12 +175,14 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 	\subsection{\underline{我不理解的地方}}
 \begin{itemize}
 	\item \texttt{STATUS} 和 \texttt{get\_llm\_answer} 函数的具体实现和作用。（还包括 \texttt{llmclass} 的 \texttt{if\_document\_searched}， \texttt{process\_query} 这些）
-	\item \textcolor{mycolor}{self.llmclass.process\_query这个函数的返回结果是什么格式，有什么样例吗？流式和非流式的方式中，回答都是一次产生的，但是流式返回是按半句话来读，还能用非阻塞的方式节省时间，非流式是一次读完全部的回答是这个意思吗？}
+	\item {mycolor}{self.llmclass.process\_query这个函数的返回结果是什么格式，有什么样例吗？流式和非流式的方式中，回答都是一次产生的，但是流式返回是按半句话来读，还能用非阻塞的方式节省时间，非流式是一次读完全部的回答是这个意思吗？}\\
+	\textbf{答：} self.llmclass.process\_query 函数传入的是用户的问题，返回的是大模型生成的回答。分为非流式和流式两种情况。非流式就是最简单的情况，直接把大模型的回答完整返回，那么 self.llmclass.process\_query 函数的返回值就是一个字符串。流式是指一个字一个字返回，因为自回归生成式模型就是一个字一个字生成的，那么这样返回就会更快，不必等待回答完整生成才返回。此时 self.llmclass.process\_query 函数的返回值就不是字符串了，而是一个生成器，可以了解一下 python 的生成器，并在代码中搜索 yield 来看看生成器的用法。
 	\item 816行，\texttt{text2speech("?")}，这个问号怎么也能转语音\\
 	\textbf{是为了保证打断，因为我们的打断是上一句.前面都是异步播放，本句后面没有下一句的话，播放过程不会被打断因此得手动加一句话。}
 	\item \texttt{interrupt\_stream} 和 \texttt{STATUS} 里的 \texttt{interrupt} 什么区别，为什么要加上这个？
 	\begin{itemize}
-		\item \texttt{STATUS.is\_interrupted}
+		\item \texttt{STATUS.is\_interrupted}\\
+		\textbf{答:}
 		
 		\texttt{STATUS.is\_interrupted} 就是指用户有没有用唤醒词打断机器人，这个变量在整个流程中都非常重要。
 		
@@ -202,7 +204,14 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 	\item 853行 \texttt{if self.interrupt\_stream:}\\
 	\texttt{sleep(0.05)}\\
 	\texttt{STATUS.set\_is\_Interrupted(False)}\\
-	\textcolor{mycolor}{依旧没看明白，为什么等了0.05秒就给这个状态消除了，受到打断产生interrupt\_stream这个信号为什么只需要维持0.05秒？}
+	\textbf{依旧没看明白，为什么等了0.05秒就给这个状态消除了，受到打断产生interrupt\_stream这个信号为什么只需要维持0.05秒？}\\
+\textbf{答:} 这是一个历史遗留问题。首先需要明确的是，当用户使用唤醒词打断后，会在唤醒词回调函数中把 \texttt{STATUS.is\_Interrupted} 变量置为 \texttt{True}（可以了解一下什么是回调函数，具体的代码详见 \texttt{MainClass} 的 \texttt{def ivw\_callback()}），那么就一定需要在某个地方把这个变量重新恢复为 \texttt{False}，也就是恢复为正常状态。
+
+\hspace{2em} 853 行开始的这 3 行代码的含义是，如果用户使用唤醒词打断了大模型的回答播音（此时 \texttt{STATUS.is\_Interrupted} 变量已经自动变为 \texttt{True}），那么就在 0.05 秒后，把这个变量重新恢复为 \texttt{False}，中间留的 0.05 秒是为了给其他程序反应时间（例如打断播音的程序），其他程序会在 \texttt{while} 循环中不停检测 \texttt{STATUS.is\_Interrupted} 变量，留出 0.05 秒防止其他程序还没有检测到打断，这个变量就被恢复了。
+
+\hspace{2em} 可以看到 \texttt{answer\_question} 函数是在 \texttt{handle\_interrupt} 函数中的 \texttt{while} 循环的最末尾被调用的，当用户打断了 \texttt{answer\_question} 函数的播音后，就会跳出 \texttt{answer\_question} 函数，继续进行 \texttt{handle\_interrupt} 函数的 \texttt{while} 循环，重新完成播放提示语、录音、生成回答的流程。
+
+\hspace{2em} 然而，在后来的改进中，我们把 \texttt{STATUS.is\_Interrupted} 变量的恢复放在 \texttt{handle\_interrupt} 函数中，而不依赖于 853 行开始的这 3 行代码，但是由于我们人员有限，可能会没有空维护代码（例如清理之前的冗余代码）。不过因为 \texttt{STATUS.is\_Interrupted} 变量为 \texttt{False} 的状态是常规状态，绝大部分情况下 \texttt{STATUS.is\_Interrupted} 变量都是 \texttt{False}，所以也没有引发 BUG。
 \end{itemize}
 \section{Interruption Class}
 \subsection{continue\_rotate}
@@ -235,11 +244,13 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 	\end{itemize}
 	\item \textbf{\underline{一些不理解的地方:}}
 	\begin{itemize}
-		\item \textcolor{mycolor}{Twist的z的角速度是往哪里转向的？(左右还是抬头低头)STATU \\ S.HANDHELD\_DETECT和 STATUS.HANDHELD\_DETECT\_FLAG，这两个变量是谁设置的，什么含义？}
+		\item {Twist的z的角速度是往哪里转向的？(左右还是抬头低头)STATU \\ S.HANDHELD\_DETECT和 STATUS.HANDHELD\_DETECT\_FLAG，这两个变量是谁设置的，什么含义？}\\
+		\textbf{答：} z 的角速度是指左右转，z 轴是垂直于地面的轴。 \texttt{STATUS.HANDHELD\_DETECT} 是指识别手持麦克风的功能是否开启。 \texttt{STATUS.HANDHELD\_DETECT\_FLAG} 是指现在有没有识别到手持麦克风。这个功能是我们开发过程中的一个“中间功能”，目前由于机器人本身的噪声太大了，所以只能用手持麦克风来语音交互，并且在左右转的过程中的确是检测到手持麦克风就说明正对观众了。未来当机器人噪声下降，我们会改方案的。
 		\item 
 		STATUS.set\_Big\_Face\_Area(None) 什么叫Big\_Face\_Area
 		\\答:Big\_Face\_Area:str = "LEFT",                     \# robot检测到的人脸区域
-		\item \textcolor{mycolor}{手持麦克风检测是怎么回事？哪里有手持麦克风？是检测到手持麦克风就是转到正对观众的方向了吗？}
+		\item {手持麦克风检测是怎么回事？哪里有手持麦克风？是检测到手持麦克风就是转到正对观众的方向了吗？}\\
+		\textbf{答：}见第一个回答.
 	\end{itemize}
 \end{itemize}
 \subsection{do\_action\_rely\_instruction}
@@ -276,7 +287,10 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 				if STATUS.NAVI_END_FLAG == 'success':
 				STATUS.set_NAVI_END_FLAG(None)
 				break
-		\end{verbatim}\textcolor{mycolor}{这里的NAVI\_END\_FLAG看定义应该为bool类型，为什么这里还能和字符串比较？}     
+		\end{verbatim}{这里的NAVI\_END\_FLAG看定义应该为bool类型，为什么这里还能和字符串比较？}   \\  
+		\textbf{答:} NAVI\_END\_FLAG 看字面意思确实应该是一个 bool 变量，但是后来我们为了扩展功能，希望 NAVI\_END\_FLAG 可以记录更多信息，比如：导航成功、导航被主动取消、导航失败。然而，变量名没有及时更改，并且扩展后的其他信息（导航被主动取消）还没有利用起来。
+		
+		\hspace{2em}这样的现象也是正常的，因为我们目前的代码还处于开发阶段，远不是稳定版本，因此很多地方留有暂时没有用到的代码。
 	\end{itemize}
 \end{itemize}
 \subsection{handle\_interrupt}
@@ -308,14 +322,119 @@ src/voice_pkg/scripts/kedaxunfei_tts/test_host_3090_tts.py", text, savepath])
 			\item 如果任务类型仍为 \texttt{qa}，生成答案并播音。如果启用了动作执行，启动动作执行线程并等待其完成。
 		\end{itemize}
 	\end{enumerate}
-	\item \textbf{\textcolor{mycolor}{不理解的地方}}
-	\begin{itemize}
-		\item name = self.get\_self\_name() 什么时候能返回InterruptClass以及多个class？
-		\item self.pre\_next\_situation = False这个属性是什么？
-		\item STATUS.Touchpad\_Area == 'NowIsInterrupted'
-\\		STATUS.set\_Touchpad\_Area('NowIgnoreTouchpad')这两种状态什么含义
-		\item 什么情况下需要把QAing状态设置为true，为什么？
-		\item 为什么这里的clear都是true,没见到修改clear的操作
-	\end{itemize}
+	\item \textbf{{不理解的地方}}
+\begin{itemize}
+	\item name = self.get\_self\_name() 什么时候能返回 InterruptClass 以及多个 class？\\
+	
+	\textbf{答:}NavigationClass 和 ExplainClass 都继承自 InterruptClass，那么就都继承 self.get\_self\_name() 方法和 self.handle\_interrupt() 方法。我们希望在有用户打断时，我们能知道是在哪个环节打断的，比如导航过程中被打断，那么就会调用 NavigationClass 的 handle\_interrupt() 方法，此时 get\_self\_name() 方法就会返回 “NavigationClass” 字符串。
+	
+	\item self.pre\_next\_situation = False 这个属性是什么？\\
+	
+	\textbf{答:}我们有一个功能，用户可以直接用语音指令让机器人带用户去某个展区，比如用户可以说“带我去参观东方红卫星”。这个功能有一个扩展，即用户也可以说“带我去上一个展区”或“带我去下一个展区”。但是这个扩展功能存在一种比较麻烦的情况，那就是如果此时已经是最后一个展区，用户却下达了“带我去下一个展区”的指令，此时就需要告诉用户“不好意思，现在已经在最后一个展区，请向我提问或告诉我您想去哪个展区”。然后把 pre\_next\_situation 置为 True，并把 pre\_next\_flag 置为 True。可以看到 handle\_interrupt 函数中有一个大大的循环就是用 pre\_next\_flag 来控制的，目的就是在没有上一个或者下一个展区的时候，能够通过循环回到 handle\_interrupt 的开头，重新录音、让大模型生成回答。pre\_next\_situation 的作用：当没有上一个或下一个展区时，我们会播放特殊的提示语（即“不好意思，现在已经在最后一个展区……”），而不是在 handle\_interrupt 函数的最开始播放“我在”或者“大家有什么问题”的提示语，pre\_next\_situation 就用来控制这件事。
+	
+	\item STATUS.Touchpad\_Area == 'NowIsInterrupted'\\
+	STATUS.set\_Touchpad\_Area('NowIgnoreTouchpad') 这两种状态什么含义？\\
+	
+	\textbf{答:}在用户使用唤醒词打断机器人之后，既可以使用语音下指令，也可以点击触摸屏下指令，比如直接点“XXX展区”，那么机器人就会带用户去 XXX 展区（目前触摸屏只支持这种带用户参观特定展区的功能）。如果用户在没打断的时候就点了屏幕，那么 STATUS.Touchpad\_Area 会记录用户点击的展区，等到下次用户打断的时候，还没等用户说话或者点屏幕，就直接带用户去缓存的那个展区了，这是我们不希望发生的。因此在用户打断时，我们会把 STATUS.Touchpad\_Area 置为 ‘NowIsInterrupted’，此时才会接收来自触摸屏的消息。如果用户使用语音下达了指令，那么我们会把 STATUS.Touchpad\_Area 置为 ‘NowIgnoreTouchpad’，表示用户没有通过触摸屏下达指令。
+	
+	\item 什么情况下需要把 QAing 状态设置为 true，为什么？\\
+	
+	\textbf{答:}QAing、Exlaining、Navigating 表示是否处于问答、讲解、导航状态，记录此时机器人正在执行的任务。在最早的版本中，问答状态是不能被打断的，比如此时正在播放大模型的回答，那么 QAing == True，是不可以打断的。后来改进了这个点，问答状态也可以打断了。然而还有另一种情况不能被打断：当机器人自己播音是念到唤醒词时，会自己把自己打断，这是不应该发生的，因此在那些包含唤醒词的播音句处，就会把 QAing 置为 True，防止机器人自己打断自己。因此 QAing 变量更应该把名字改成 Avoid\_Interrupted，即避免被打断。
+	
+	\item 为什么这里的 clear 都是 true，没见到修改 clear 的操作？\\
+	
+	\textbf{答:}我们还有一个未开发完成的功能：当用户指着旁边的物体并问“给我介绍一下这个展品”时，用户指令中的展品名称是不清晰的，此时 clear 应该置为 False，并启用手势识别、姿势识别、语义地图和机器人定位来确定用户指的是哪个展品。当用户指令中的展品名称是清晰的，或者根本没有提问和展品相关的问题，clear 应该置为 True。现在因为这个功能还没开发完成，所以 clear 始终为 True。
+	\item \textcolor{mycolor}{展区后面的\_1 ,\_2是什么含义？他们都是一个地方机器人不用移动吗所以才会找下一个地点把同一前缀的全删掉吗？}\\ \\
+	\textbf{答:}
 \end{itemize}
+\end{itemize}
+\section{NavigationClass}
+\subsection{send\_destination\_and\_handle\_interrupt}
+send\_destination\_and\_handle\_interrupt 函数的主要作用是通过导航目标点话题发送目标点代号，并在导航过程中处理可能的打断信号和障碍物。
+\subsection{执行流程}
+
+\begin{enumerate}
+	\item \textbf{初始化导航状态}：
+	\begin{itemize}
+		\item 设置导航状态为正在导航 (`STATUS.set\_is\_Navigating(True)`)，并初始化障碍物状态为无障碍 (`STATUS.set\_is\_Depth\_Obstacle(False)` 和 `STATUS.set\_is\_Yolo\_Obstacle(False)`)。
+	\end{itemize}
+	
+	\item \textbf{检查下位机是否存在}：
+	\begin{itemize}
+		\item 如果下位机存在 (`STATUS.LOW\_COMPUTER\_EXIST`)，则发送目标点代号，并等待导航启动。
+	\end{itemize}
+	
+	\item \textbf{等待导航启动}：
+	\begin{itemize}
+		\item 通过循环等待导航启动信号 (`STATUS.NAVI\_START\_FLAG`)：
+		\begin{itemize}
+			\item 如果超过一定时间未响应，打印错误信息并返回 `False`。
+			\item 如果导航启动成功，打印成功信息并继续。
+			\item 如果导航启动失败，打印失败信息并返回 `False`。
+		\end{itemize}
+	\end{itemize}
+	
+	\item \textbf{处理导航过程中的打断信号}：
+	\begin{itemize}
+		\item 在导航过程中，持续监听打断信号 (`self.listen\_for\_INT()`)：
+		\begin{itemize}
+			\item 如果收到打断信号，向下位机发送停止信号，并调用父类的 `handle\_interrupt` 方法处理打断。
+			\item 如果打断处理结果不是继续导航，则结束导航并返回 `False`。
+		\end{itemize}
+	\end{itemize}
+	
+	\item \textbf{检查导航结束状态}：
+	\begin{itemize}
+		\item 如果导航成功到达目标点 (`STATUS.NAVI\_END\_FLAG == 'success'`)，则结束导航并返回 `True`。
+	\end{itemize}
+	
+	\item \textbf{处理导航过程中的障碍物}：
+	\begin{itemize}
+		\item 如果遇到障碍物 (`STATUS.is\_Depth\_Obstacle` 或 `STATUS.is\_Yolo\_Obstacle`)，向下位机发送停止信号，并持续提示用户避让，直到障碍物消失。
+	\end{itemize}
+	
+	\item \textbf{下位机不存在的情况}：
+	\begin{itemize}
+		\item 如果下位机不存在，模拟机器人行走一段时间，并在过程中检查是否有打断信号。
+	\end{itemize}
+\end{enumerate}
+\subsection{\textcolor{mycolor}{不理解的地方}}
+\begin{itemize}
+	\item \begin{verbatim}
+	（903行）while True:
+		interrupt_flag = self.listen_for_INT()
+	
+		if interrupt_flag:
+			if STATUS.LOW_COMPUTER_EXIST:
+				STATUS.Stop_Publisher.publish('stop')
+			print("\n因为语音打断，向下位机发送停止信号")
+	
+		sleep(0.1)
+		if_continue = self.handle_interrupt()
+		if if_continue not in ['continue', 'start']:
+			STATUS.set_is_Navigating(False)
+			if '_' not in STATUS.Current_Order_of_Visit[0]:
+				STATUS.set_Last_Area(STATUS.Current_Order_of_Visit[0])
+			return False
+		else:
+			return False
+	\end{verbatim}
+	1:这里的"sleep(0.1) \# 防止 self.handle\_interrupt() 太快，在 text2speech 
+	之前把 STATUS.is\_interrupted 置为 False"，那里的 text2speech可能被影响到\\
+	2:为什么第二个return注释写的是继续导航？看上去前面已经发过停止指令了\\
+	3:STATUS.set\_Last\_Area(STATUS.Current\_Order\_of\_Visit[0])是做什么的，为什么只有这一种情况要设置他
+	\item STATUS.get\_first\_Current\_Order\_of\_Visit\_id()是做什么的？（945行）是停止后重新导航的吗？
+\end{itemize}
+\section{MainClass}
+\subsection{\textcolor{mycolor}{不理解的地方:}}
+\begin{itemize}
+	\item rospy.Subscriber("ivw\_chatter", String, self.ivw\_callback) 这里的subscriber函数的机制没看懂。
+	\item \begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{screenshot002}
+		\label{fig:screenshot002}
+	\end{figure}
+	没看懂这里的self.face\_recog\_queue和STATUS.Recog\_Count\_Dict应该是存的什么东西，谁在维护，哪里进行人脸识别
+	
+\end{itemize}	
 \end{document}
