@@ -1,0 +1,149 @@
+<!doctype html>
+<html class="kaixin no-js" lang="cmn-hans" id="list">
+<head>
+<meta charset="utf-8" />
+<title>Our Story</title>
+<link rel="canonical" href="https://ourstory.example.com/" />
+<link rel="alternate" type="application/atom+xml" title="Subscribe to Our Story" href="https://ourstory.example.com/feed/" />
+<link rel="stylesheet" href="Us.css">
+<meta content="True" name="HandheldFriendly" />
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Our Story" />
+<meta name="robots" content="index, follow" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" type="image/png" href="/icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link href="/assets/css/style.css" type="text/css" rel="stylesheet">
+<!-- Include Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+#kxscr {
+  scroll-snap-type: y mandatory;
+  scroll-snap-stop: always;
+  height: 100vh;
+  overflow: auto;
+}
+#kxscr section {
+  scroll-snap-align: start;
+}
+section {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+#kxan { height: auto; }
+.kx-co {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.description {
+  max-width: 38rem;
+  margin-top: 3rem;
+}
+.kxtp .description {
+  margin-top: 0;
+}
+figure {
+  flex: 1 1;
+  background-position: left top;
+  background-size: contain;
+}
+figure img {
+  display: none;
+}
+#floating-box {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+#floating-box img {
+  width: 50px;
+  height: 50px;
+}
+#floating-box p {
+  margin: 0;
+  text-align: center;
+}
+</style>
+<script>document.documentElement.classList.remove("no-js");</script>
+</head>
+<body class="kx-page dimlau">
+<div id="floating-box">
+  <img src="/path/to/icon.png" alt="Icon">
+  <p>Our Story</p>
+</div>
+<div id="kxscr">
+  <section class="kxtp" id="IN-posts">
+    <article class="kx-co">
+      <div id="container">
+        <div class="frame-container">
+          <div class="frame">
+            <img src="./Imgs/luchy_journey.jpg" alt="北京站">
+            <div class="comment-container">
+              <div class="comment-avatar">
+                <img src="./Imgs/lxl.jpg" alt="Avatar">
+              </div>
+              <div class="comment-text pacifico">
+                From July 8th to July 12th, the city itself may not be enchanting, but someone makes it feel magical.
+              </div>
+            </div>
+          </div>
+          <div class="frame">
+            <img src="./Imgs/luchy_journey.jpg" alt="北京夜景">
+            <div class="comment-container">
+              <div class="comment-avatar">
+                <img src="./Imgs/lxl.jpg" alt="Avatar">
+              </div>
+              <div class="comment-text pacifico">
+                I take a small step forward and good night.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section class="kxtp" id="IN-hot">
+    <article class="kx-co">
+      <figure class="lozad" data-background-image="/home/_hot/cover.jpeg">
+        <img class="lozad" data-src="/home/_hot/cover.jpeg" />
+      </figure>
+      <div class="description">
+        <h2 class="kxt">Section 2</h2>
+        <div class="kxp">
+          <p>Content for section 2...</p>
+        </div>
+      </div>
+    </article>
+  </section>
+  <section class="kxtp" id="IN-book-long-running-cafe">
+    <article class="kx-co">
+      <figure class="lozad" data-background-image="/home/_book-long-running-cafe/book-cover.jpg">
+        <img class="lozad" data-src="/home/_book-long-running-cafe/book-cover.jpg" />
+      </figure>
+      <div class="description">
+        <h2 class="kxt">Section 3</h2>
+        <div class="kxp">
+          <p>Content for section 3...</p>
+        </div>
+      </div>
+    </article>
+  </section>
+</div>
+<script>
+let vh = window.innerHeight * 0.01;
+document.documentElement.style.setProperty('--vh', `${vh}px`);
+window.addEventListener('resize', () => {  
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+});
+</script>
+</body>
+</html>

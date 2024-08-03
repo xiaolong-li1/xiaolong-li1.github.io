@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行计划</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(120deg, #f6d365, #fda085);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            position: relative;
+        }
+        table {
+            border-collapse: collapse;
+            width: 80%;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            font-size: 16px;
+        }
+        th {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        td:nth-child(1) {
+            background-color: rgba(246, 211, 101, 0.5);
+        }
+        td:nth-child(2) {
+            background-color: rgba(253, 160, 133, 0.5);
+        }
+        td:nth-child(3) {
+            background-color: rgba(246, 211, 101, 0.3);
+        }
+        td:nth-child(4) {
+            background-color: rgba(253, 160, 133, 0.3);
+        }
+        td:nth-child(5) {
+            background-color: rgba(246, 211, 101, 0.1);
+        }
+        h1 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #fff;
+            font-size: 24px;
+            margin: 20px 0 0;
+            font-family: 'Dancing Script', cursive;
+            line-height: 1.5;
+        }
+        .floating-img {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            padding: 10px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            /* background-color: #fff; 添加背景颜色来可见内边距效果 */
+        }
+        .floating-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center bottom;
+        }
+        .floating-img.bottom-right {
+            bottom: 20px;
+            right: 20px;
+        }
+        .floating-img.top-left {
+            top: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>旅行计划</h1>
+    <table>
+        <tr>
+            <th>日期</th>
+            <th>时间和地点</th>
+            <th>上午安排</th>
+            <th>下午安排</th>
+            <th>晚上安排</th>
+        </tr>
+        <tr>
+            <td>2024/8/7</td>
+            <td>7:01 哈尔滨站</td>
+            <td>吃早饭，放行李，在工业大学逛一逛，估计10点结束，之后可去731</td>
+            <td>下午去东北虎林园</td>
+            <td>不能错过的松花江和中央大街的晚上</td>
+        </tr>
+        <tr>
+            <td>2024/8/8</td>
+            <td>6:48 哈尔滨西-&gt;延吉（10:33）</td>
+            <td>找到酒店放行李，如果不让放，就通过小程序找行李寄存，吃点饭</td>
+            <td>可以去民俗园拍照，帽儿山看日落</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>2024/8/9</td>
+            <td>延吉到长白山南坡，游客集散中心寄存行李</td>
+            <td>（据说没信号要带零钱吃饭）爬山，如果下来的比较早就去车站附近的小镇看一看</td>
+            <td></td>
+            <td>五个小时回到哈尔滨睡觉</td>
+        </tr>
+        <tr>
+            <td>2024/8/10</td>
+            <td></td>
+            <td>早餐可以在我们的二校区解决，可以在龙塔愉快的休息一早上</td>
+            <td>下午可以去看二人转（不过看评价虽然很有东北特色但有不少荤段子），去中央大街的咖啡馆休息一下</td>
+            <td>啤酒节吃烧烤，九点需要到车站</td>
+        </tr>
+    </table>
+    <p>个人认为，哈尔滨的美丽和精彩大多在晚上，<br>大家结束了一天的工作，去江边散心，去看各种演出，<br>会有很多新奇的有趣的事情，可惜哈尔滨只有完整的一晚上予你，<br>我尽力让白天的日程有趣一些。</p>
+    <div class="floating-img bottom-right">
+        <img src="small_dog.png" alt="图片描述">
+    </div>
+    <div class="floating-img top-left">
+        <img src="cute_dog.png" alt="图片描述">
+    </div>
+</body>
+</html>

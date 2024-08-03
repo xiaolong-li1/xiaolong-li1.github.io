@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="cmn-hans">
+<head>
+<link rel="stylesheet" href="../font_4622768_rhvjbmcl0a/iconfont.css">
+<meta charset="utf-8" />
+<title>北京站回忆</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="展示北京站的照片和一些文字" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="stylesheet" href="Us.css">
+<!-- Include Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&family=Pacifico&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<script>document.documentElement.classList.remove("no-js");</script>
+</head>
+<body>
+  <div id="fixed-box">
+    <ul>
+      <li v-for="item in items" :key="item.des">
+        <a :href="item.href">
+          <i class="icon iconfont" :class="item.icon"></i>
+          <span>{{item.des}}</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div id="kxscr">
+    <section>
+      <div class="frame-container">
+        <div class="frame">
+          <img src="./Imgs/luchy_journey.jpg" alt="北京站">
+          <div class="comment-container">
+            <div class="comment-avatar">
+              <img src="./Imgs/lxl.jpg" alt="Avatar">
+            </div>
+            <div class="comment-text pacifico">
+              From July 8th to July 12th, the city itself may not be enchanting, but you makes it feel magical.
+            </div>
+          </div>
+        </div>
+        <div class="frame">
+          <img src="./Imgs/luchy_journey.jpg" alt="北京夜景">
+          <div class="comment-container">
+            <div class="comment-avatar">
+              <img src="./Imgs/lxl.jpg" alt="Avatar">
+            </div>
+            <div class="comment-text pacifico">
+              I take a small step forward and good night.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="background-page">
+      <!-- 第二页内容 -->
+    </section>
+  </div>
+  <script>
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  window.addEventListener('resize', () => {  
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script>
+    var app = new Vue({
+      el: '#fixed-box',
+      data: {
+        header: {
+          name: 'XiaoLong',
+          imgUrl: 'images/avator.jpg',
+          signature: 'Simple minds, simple pleasures'
+        },
+        items: [
+          {
+            href: '../Blogs/index.html',
+            icon: 'icon-blog',
+            des: 'Blog'
+          },
+          {
+            href: '../OurStory/index.html',
+            icon: 'icon-clover',
+            des: 'OurStory'
+          }
+        ]
+      },
+      methods: {
+        getCloverIcon() {
+          return this.items[1].icon; // 返回 clover 图标的类名
+        }
+      }
+    })
+  </script>
+</body>
+</html>
