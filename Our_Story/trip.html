@@ -14,7 +14,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
@@ -23,7 +23,8 @@
         }
         table {
             border-collapse: collapse;
-            width: 80%;
+            width: 100%;
+            max-width: 800px;
             background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             overflow: hidden;
@@ -34,7 +35,7 @@
             padding: 15px;
             text-align: center;
             border-bottom: 1px solid #ddd;
-            font-size: 16px;
+            font-size: 14px;
         }
         th {
             background-color: rgba(255, 255, 255, 0.8);
@@ -61,23 +62,24 @@
         h1 {
             color: #fff;
             margin-bottom: 20px;
+            font-size: 2em;
         }
         p {
             color: #fff;
-            font-size: 24px;
+            font-size: 1.5em;
             margin: 20px 0 0;
             font-family: 'Dancing Script', cursive;
             line-height: 1.5;
         }
         .floating-img {
             position: absolute;
-            width: 100px;
-            height: 100px;
-            padding: 10px;
+            width: 80px;
+            height: 80px;
+            padding: 5px;
             border-radius: 50%;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            /* background-color: #fff; 添加背景颜色来可见内边距效果 */
+            background-color: #fff; /* 添加背景颜色来可见内边距效果 */
         }
         .floating-img img {
             width: 100%;
@@ -92,6 +94,23 @@
         .floating-img.top-left {
             top: 20px;
             left: 20px;
+        }
+        @media (max-width: 600px) {
+            th, td {
+                padding: 10px;
+                font-size: 12px;
+            }
+            h1 {
+                font-size: 1.5em;
+            }
+            p {
+                font-size: 1.2em;
+            }
+            .floating-img {
+                width: 60px;
+                height: 60px;
+                padding: 5px;
+            }
         }
     </style>
 </head>
