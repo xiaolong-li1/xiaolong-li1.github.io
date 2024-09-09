@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.5.18)  26 JUL 2024 13:31
+This is XeTeX, Version 3.141592653-2.6-0.999995 (MiKTeX 24.1) (preloaded format=xelatex 2024.5.18)  19 AUG 2024 17:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -669,7 +669,21 @@ Overfull \hbox (1.35pt too wide) in paragraph at lines 244--245
 .github.io/Blogs/GAN/VAE.ipynb)[] 
  []
 
-[9] (GAN.aux)
+[9]
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 248--254
+
+ []
+
+[10
+
+] [11]
+Underfull \hbox (badness 10000) in paragraph at lines 319--321
+
+ []
+
+[12] (GAN.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2022/08/05>
@@ -679,15 +693,15 @@ L3 programming layer <2022/08/05>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `GAN.out' has not changed.
-(rerunfilecheck)             Checksum: 4650DEB780E33AD1CB413AF321746497;1467.
+(rerunfilecheck)             Checksum: 90FD924FDDB003734CDAE914814E5D33;1882.
  ) 
 Here is how much of TeX's memory you used:
- 15898 strings out of 409617
- 333250 string characters out of 5774013
- 1936191 words of memory out of 5000000
- 37782 multiletter control sequences out of 15000+600000
- 571041 words of font info for 106 fonts, out of 8000000 for 9000
+ 15985 strings out of 409617
+ 338234 string characters out of 5774013
+ 1941191 words of memory out of 5000000
+ 37865 multiletter control sequences out of 15000+600000
+ 571065 words of font info for 109 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 74i,12n,81p,304b,779s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 74i,13n,81p,486b,779s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on GAN.pdf (10 pages).
+Output written on GAN.pdf (13 pages).

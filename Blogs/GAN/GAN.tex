@@ -242,4 +242,92 @@ $p(z|x)$根据上述假设，没法直接求出来，不过可以用正态分布
 Note:\href{https://www.zywvvd.com/notes/study/probability/elbo/elbo/}{关于ELBO的文章:https://www.zywvvd.com/notes/study/probability/elbo/elbo/}
 \section{Code:}
 \href{./VAE.ipynb}{点击这里查看代码文件(https://xiaolong-li1.github.io/Blogs/GAN/VAE.ipynb)}
+\chapter{Diffusion Model}
+\section{简介}
+\section{前向——加噪声}
+在前向过程中，来自训练集的图像$x_0$会被添加T
+次噪声，使得$x_T$
+为符合标准正态分布。准确来说，「加噪声」并不是给上一时刻的图像加上噪声值，而是从一个均值与上一时刻图像相关的正态分布里采样出一幅新图像。如下面的公式所示，$\mathbf{x}_{T-1}$
+是上一时刻的图像，$x_T$
+是这一时刻生成的图像，该图像是从一个均值与
+有关的正态分布里采样出来的。\\
+\[
+\mathbf{x}_t \sim \mathcal{N}(\mu_t(\mathbf{x}_{t-1}), \sigma_t^2 \mathbf{I})
+\]
+绝大多数扩散模型会把这个正态分布设置为这个形式:
+\[
+\mathbf{x}_t \sim \mathcal{N}(\sqrt{1-\beta_t}\mathbf{x_{t-1}},\beta_t \mathbf{I})
+\]
+\indent 这个正态分布公式乍看起来很奇怪：$\sqrt{1-\beta_t}$
+是哪里冒出来的？为什么会有这种奇怪的系数？别急，我们先来看另一个问题：假如给定$\mathbf{x}_{0}$
+，也就是从训练集里采样出一幅图片，该怎么计算任意一个时刻T
+的噪声图像
+呢？
+
+我们不妨按照公式，从
+开始倒推。
+其实可以通过一个标准正态分布的样本
+算出来：
+\[
+\begin{aligned}
+	\mathbf{x}_t &\sim \mathcal{N}(\sqrt{1 - \beta_t}\mathbf{x}_{t-1}, \beta_t \mathbf{I}) \\
+	&\Rightarrow \mathbf{x}_t = \sqrt{1 - \beta_t} \mathbf{x}_{t-1} + \sqrt{\beta_t} \epsilon_{t-1}; \epsilon_{t-1} \sim \mathcal{N}(0, \mathbf{I}) \\
+	\\
+	\mathbf{x}_t &= \sqrt{1 - \beta_t} \mathbf{x}_{t-1} + \sqrt{\beta_t} \epsilon_{t-1} \\
+	&= \sqrt{1 - \beta_t}(\sqrt{1 - \beta_{t-1}}\mathbf{x}_{t-2} + \sqrt{\beta_{t-1}} \epsilon_{t-2}) + \sqrt{\beta_t} \epsilon_{t-1} \\
+	&= \sqrt{(1 - \beta_t)(1 - \beta_{t-1})} \mathbf{x}_{t-2} + \sqrt{(1 - \beta_t)\beta_{t-1}} \epsilon_{t-2} + \sqrt{\beta_t} \epsilon_{t-1}
+\end{aligned}
+\]
+由正态分布的性质可知，均值相同的正态分布「加」在一起后，方差也会加到一起。也就是\(\mathcal{N}(0, \sigma_1^2I)\)与\(\mathcal{N}(0, \sigma_2^2I)\)合起来会得到\(\mathcal{N}(0, (\sigma_1^2 + \sigma_2^2)I)\)。根据这一性质，上面的公式可以化简为：
+\[
+\begin{aligned}
+&\sqrt{(1-\beta_t)(1-\beta_{t-1})}x_{t-2} + \sqrt{(1-\beta_t)\beta_{t-1}}\epsilon_{t-2} + \sqrt{\beta_t}\epsilon_{t-1}\\
+&= \sqrt{(1-\beta_t)(1-\beta_{t-1})}x_{t-2} + \sqrt{(1-\beta_t)\beta_{t-1} + \beta_t}\epsilon\\
+&= \sqrt{(1-\beta_t)(1-\beta_{t-1})}x_{t-2} + \sqrt{1-(1-\beta_t)(1-\beta_{t-1})}\epsilon
+\end{aligned}
+\]
+再往前推一步的话，结果是：
+\[
+\sqrt{(1-\beta_t)(1-\beta_{t-1})(1-\beta_{t-2})}x_{t-3} + \sqrt{1-(1-\beta_t)(1-\beta_{t-1})(1-\beta_{t-2})}\epsilon
+\]
+我们已经能够猜出规律来了，可以一直把公式推到\(x_0\)。令\(\alpha_t = 1-\beta_t, \bar{\alpha}_t = \prod_{i=1}^t \alpha_i\)，则：
+\[
+x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon
+\]
+有了这个公式，我们就可以讨论加噪声公式为什么是\(x_t \sim \mathcal{N}(\sqrt{1-\beta_t}x_{t-1}, \beta_tI)\)了。这个公式里的\(\beta_t\)是一个小于1的常数。在DDPM论文中，\(\beta_t\)从\(\beta_1 = 10^{-4}\)到\(\beta_T = 0.02\)线性增长。这样，\(\beta_t\)变大，\(\alpha_t\)也越小，\(\bar{\alpha}_t\)超于0的速度越来越快。最后，\(\bar{\alpha}_T\)几乎为0，代入\(x_T = \sqrt{\bar{\alpha}_T}x_0 + \sqrt{1-\bar{\alpha}_T}\epsilon\)，\(x_T\)就满足标准正态分布了，符合我们对扩散模型的要求。上述推断可以简单描述为：加噪声公式能够从慢到快地改变原图像，让图像最终均值为0，方差为I。
+
+\section{反向——去噪声}
+在正向过程中，我们人为设置了T
+步加噪声过程。而在反向过程中，我们希望能够倒过来取消每一步加噪声操作，让一幅纯噪声图像变回数据集里的图像。这样，利用这个去噪声过程，我们就可以把任意一个从标准正态分布里采样出来的噪声图像变成一幅和训练数据长得差不多的图像，从而起到图像生成的目的。
+
+现在问题来了：去噪声操作的数学形式是怎么样的？怎么让神经网络来学习它呢？数学原理表明，当$\beta_t$
+足够小时，每一步加噪声的逆操作也满足正态分布。
+\[
+\mathbf{x}_{t-1} \sim \mathcal{N}\left(\tilde{\mu}_t, \tilde{\beta}_t \mathbf{I}\right)
+\]
+已知的：
+\begin{align*}
+	q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_{t}, \mathbf{x}_0\right) &= q\left(\mathbf{x}_{t} \mid \mathbf{x}_{t-1}, \mathbf{x}_0\right) \frac{q\left(\mathbf{x}_{t-1} \mid \mathbf{x}_0\right)}{q\left(\mathbf{x}_{t} \mid \mathbf{x}_0\right)} \\
+	q\left(\mathbf{x}_{t} \mid \mathbf{x}_0\right) &= \mathcal{N}\left(\mathbf{x}_{t}; \sqrt{\overline{\alpha}_t} \mathbf{x}_0, (1 - \overline{\alpha}_t) \mathbf{I}\right) \\
+	q\left(\mathbf{x}_{t} \mid \mathbf{x}_{t-1}, \mathbf{x}_0\right) &= \mathcal{N}\left(\mathbf{x}_{t}; \sqrt{1 - \beta_t} \mathbf{x}_{t-1}, \beta_t \mathbf{I}\right)
+\end{align*}
+首先，把其他几个式子带入贝叶斯公式的等式右边。
+\begin{align*}
+	q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0) &= \frac{1}{\beta_t \sqrt{2\pi}} \exp\left(-\frac{(\mathbf{x}_t - \sqrt{1 - \beta_t} \mathbf{x}_{t-1})^2}{2\beta_t}\right) \cdot \\
+	&\quad \frac{1}{\left(1 - \overline{\alpha}_{t-1}\right)\sqrt{2\pi}} \exp\left(-\frac{\left(\mathbf{x}_{t-1} - \sqrt{\overline{\alpha}_{t-1}} \mathbf{x}_0\right)^2}{2\left(1 - \overline{\alpha}_{t-1}\right)}\right) \cdot \\
+	&\quad \left(\frac{1}{\left(1 - \overline{\alpha}_t\right)\sqrt{2\pi}} \exp\left(-\frac{\left(\mathbf{x}_t - \sqrt{\overline{\alpha}_t} \mathbf{x}_0\right)^2}{2\left(1 - \overline{\alpha}_t\right)}\right)\right)^{-1}
+\end{align*}
+由于多个正态分布的乘积还是一个正态分布，我们知道$q\left( \mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0 \right)\sim \mathcal{N}(\tilde{\mu_t},\epsilon_t)$\\
+\[
+\epsilon_t=\tilde{\beta_t}
+\]
+\[
+\tilde{\mu}_t = \frac{1}{\sqrt{\alpha_t}} \left( \mathbf{x}_t - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha}_t}} \epsilon_t \right)
+\]
+$\epsilon{t}$是用公式算$\mathbf{x}_t$
+时从标准正态分布采样出的样本，它来自公式
+\[
+\mathbf{x}_t = \sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sqrt{1 - \bar{\alpha}_t} \epsilon_t
+\]
+
 \end{document}

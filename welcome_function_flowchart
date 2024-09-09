@@ -1,0 +1,32 @@
+// Welcome Function Flowchart
+digraph {
+	fontname=SimSun
+	A [label=Start fontname=SimSun]
+	B [label="进入welcome阶段" fontname=SimSun]
+	C [label="人脸检测唤醒" fontname=SimSun]
+	D [label="检测到大人脸?" fontname=SimSun]
+	E [label="迎宾词" fontname=SimSun]
+	F [label="语音唤醒" fontname=SimSun]
+	G [label="检测到语音输入?" fontname=SimSun]
+	H [label="被打断?" fontname=SimSun]
+	I [label="人脸识别迎宾语" fontname=SimSun]
+	J [label="统计识别到的人脸次数" fontname=SimSun]
+	K [label="筛选常见人脸" fontname=SimSun]
+	L [label="生成迎宾语" fontname=SimSun]
+	M [label=End fontname=SimSun]
+	A -> B
+	B -> C
+	C -> D
+	D -> E [label="是" fontname=SimSun]
+	D -> F [label="否" fontname=SimSun]
+	E -> F
+	F -> G
+	G -> H [label="是" fontname=SimSun]
+	G -> I [label="否" fontname=SimSun]
+	H -> I [label="是" fontname=SimSun]
+	H -> F [label="否" fontname=SimSun]
+	I -> J
+	J -> K
+	K -> L
+	L -> M
+}
