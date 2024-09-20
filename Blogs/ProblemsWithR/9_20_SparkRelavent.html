@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用 Sparklyr 连接 Spark 并处理 Iris 数据集</title>
+    <style>
+        body {
+            background-image: url('../src/img/background_9_20.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.9); /* Adjusted opacity */
+            border-radius: 10px;
+            text-align: left; /* Align text to the left */
+        }
+        h1, h2 {
+            margin: 20px 0;
+            color: #fff;
+            text-align: center; /* Center align headers */
+        }
+        ol {
+            list-style: decimal inside; /* Use decimal numbers for list items */
+            padding: 0;
+            margin-left: 20px; /* Add left margin for better alignment */
+        }
+        ol li {
+            background: rgba(255, 255, 255, 0.2); /* Adjusted opacity */
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+        }
+        p {
+            margin: 0;
+            color: #fff;
+        }
+        code {
+            display: block;
+            background: rgba(255, 255, 255, 0.2); /* Adjusted opacity */
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1 id="使用-sparklyr-连接-spark-并处理-iris-数据集">使用 Sparklyr 连接 Spark 并处理 Iris 数据集</h1>
+        <h2 id="步骤">步骤</h2>
+        <ol type="1">
+            <li><p><strong>重启电脑</strong>，确保没有其他进程占用该日志文件。</p></li>
+            <li><p><strong>使用管理员身份</strong>打开 RStudio。</p></li>
+            <li><p><strong>设置 Spark 环境变量</strong>：</p>
+                <code>Sys.setenv(SPARK_HOME = "D:/Rlibrary/spark-3.5.2-bin-hadoop3")</code>
+            </li>
+            <li><p><strong>加载 sparklyr 库</strong></p>
+                <code>library(sparklyr)</code>
+            </li>
+            <li><p><strong>连接到 Spark</strong></p>
+                <code>sc &lt;- spark_connect(master = "local")</code>
+            </li>
+            <li><p><strong>将 iris 数据集复制到 Spark</strong></p>
+                <code>iris_tbl &lt;- copy_to(sc, iris, "iris")</code>
+            </li>
+            <li><p><strong>查看数据集的行数</strong></p>
+                <code>sdf_nrow(iris_tbl)</code>
+            </li>
+        </ol>
+    </div>
+</body>
+</html>
