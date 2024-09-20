@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>使用 Sparklyr 连接 Spark 并处理 Iris 数据集</title>
     <style>
         body {
@@ -10,85 +14,102 @@
             background-size: cover;
             background-position: center;
             font-family: Arial, sans-serif;
-            color: #000; /* Change text color to black */
+            color: #000;
             text-align: center;
             margin: 0;
             padding: 0;
         }
+
         .content {
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.8); /* Adjusted opacity */
+            background: rgba(255, 255, 255, 0.8);
             border-radius: 10px;
-            text-align: left; /* Align text to the left */
-            color: #000; /* Change text color to black */
+            text-align: left;
+            color: #000;
         }
-        h1, h2, h3 {
+
+        h1,
+        h2,
+        h3 {
             margin: 20px 0;
-            color: #000; /* Change text color to black */
-            text-align: center; /* Center align headers */
+            color: #000;
+            text-align: center;
         }
+
         ul {
-            list-style: none; /* Remove default list styling */
+            list-style: none;
             padding: 0;
-            margin-left: 20px; /* Add left margin for better alignment */
+            margin-left: 20px;
         }
+
         ul li {
-            background: rgba(255, 255, 255, 0.8); /* Adjusted opacity */
+            background: rgba(255, 255, 255, 0.8);
             margin: 10px 0;
             padding: 10px;
             border-radius: 10px;
-            color: #000; /* Change text color to black */
+            color: #000;
         }
+
         p {
             margin: 0;
-            color: #000; /* Change text color to black */
-            display: block; /* Ensure paragraphs are block elements */
+            color: #000;
+            display: block;
         }
+
         code {
-            display: block; /* Ensure code blocks are block elements */
-            background: rgba(255, 255, 255, 0.8); /* Adjusted opacity */
+            display: block;
+            background: rgba(255, 255, 255, 0.8);
             padding: 10px;
             border-radius: 5px;
             margin-top: 10px;
-            color: #000; /* Change text color to black */
+            color: #000;
         }
     </style>
 </head>
+
 <body>
     <div class="content">
         <h1 id="使用-sparklyr-连接-spark-并处理-iris-数据集">使用 Sparklyr 连接 Spark 并处理 Iris 数据集</h1>
         <h2 id="步骤">步骤</h2>
         <ul>
-            <li><p><strong>1. 重启电脑</strong>，确保没有其他进程占用该日志文件。</p></li>
-            <li><p><strong>2. 使用管理员身份</strong>打开 RStudio。</p></li>
-            <li><p><strong>3. 设置 Spark 环境变量</strong>：</p>
+            <li>
+                <p><strong>1. 重启电脑</strong>，确保没有其他进程占用该日志文件。</p>
+            </li>
+            <li>
+                <p><strong>2. 使用管理员身份</strong>打开 RStudio。</p>
+            </li>
+            <li>
+                <p><strong>3. 设置 Spark 环境变量</strong>：</p>
                 <code>Sys.setenv(SPARK_HOME = "D:/Rlibrary/spark-3.5.2-bin-hadoop3")</code>
             </li>
-            <li><p><strong>4. 加载 sparklyr 库</strong></p>
+            <li>
+                <p><strong>4. 加载 sparklyr 库</strong></p>
                 <code>library(sparklyr)</code>
             </li>
-            <li><p><strong>5. 连接到 Spark</strong></p>
+            <li>
+                <p><strong>5. 连接到 Spark</strong></p>
                 <code>sc &lt;- spark_connect(master = "local")</code>
             </li>
-            <li><p><strong>6. 将 iris 数据集复制到 Spark</strong></p>
+            <li>
+                <p><strong>6. 将 iris 数据集复制到 Spark</strong></p>
                 <code>iris_tbl &lt;- copy_to(sc, iris, "iris")</code>
             </li>
-            <li><p><strong>7. 查看数据集的行数</strong></p>
+            <li>
+                <p><strong>7. 查看数据集的行数</strong></p>
                 <code>sdf_nrow(iris_tbl)</code>
             </li>
         </ul>
         <h2 id="bug-解决方案">Bug 及解决方案(遇到了再添加)</h2>
         <ul>
-            <li><p><strong>1. Bug 描述：</strong> 在连接 Spark 时出现连接超时错误。</p>
+            <li>
+                <p><strong>1. Bug 描述：</strong> 在连接 Spark 时出现连接超时错误。</p>
                 <p><strong>解决方案：</strong> 确保 Spark 服务正在运行，并检查防火墙设置是否允许连接。</p>
             </li>
-            <!-- <li><p><strong>2. Bug 描述：</strong> 在加载 sparklyr 库时出现找不到库的错误。</p>
-                <p><strong>解决方案：</strong> 确保已安装 sparklyr 库，并使用 <code>install.packages("sparklyr")</code> 进行安装。</p>
-            </li> -->
             <!-- 更多 Bug 及解决方案 -->
         </ul>
     </div>
 </body>
+
 </html>
