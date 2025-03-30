@@ -58,15 +58,37 @@
         .contact-info p {
             margin: 0.5em 0;
         }
+        .position-header {
+            margin-bottom: 8px;
+        }
 
+        .company-date {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 2px;
+        }
+
+        .position-company {
+            color: #444;
+            font-size: 0.95em;
+            max-width: 70%;
+        }
+
+        .position-date {
+            color: #666;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
         .photo {
             width: 25%;
             text-align: right;
+            margin-top: 1em; /* 添加上边距，让照片下移 */
         }
 
         .photo img {
             width: 150px;
-            height: 150px;
+            height: 180px;
             object-fit: cover;
             border-radius: 5px;
             box-shadow: 0 0 5px #ccc;
@@ -174,6 +196,7 @@
             <div class="education-entry">
                 <p><strong>Seoul National University</strong> (Exchange Student)</p>
                 <div class="detail-line">
+                    <span>Department of Electrical and Computer Engineering,</span>
                     <span>Sep 2024 - Dec 2024</span>
                 </div>
             </div>
@@ -202,7 +225,7 @@
                 <li>
                     <a href="https://github.com/xiaolong-li1/SparseAttnFunctions"><strong>Sparse Attention Mechanisms for CogVideoX</strong></a>
                     <ul>
-                        <li>Developed optimized sparse attention mechanisms (windowed, block-sparse, and combined attention) for the CogVideo2B/5b video generation model, enhancing computational efficiency.</li>
+                        <li>Developed optimized sparse attention mechanisms (sliding tile, block-sparse, merge and combined attention...) for the CogVideo2B/5b video generation model, enhancing computational efficiency.</li>
                     </ul>
                 </li>
                 <li>
@@ -237,11 +260,25 @@
             </ul>
         </div>
 
-        <!-- 研究经历 -->
         <div class="section">
             <h2 class="section-title">Research Experience</h2>
-            <ul>
-                <li><strong>ZIPLAB:</strong> Spearheaded token compression for open-source CogVideoX and Huawei's proprietary models, integrating step distillation to achieve 20× theoretical acceleration while maintaining minimal quality degradation.</li>
+            <ul class="research-list">
+                <li class="research-item">
+                    <div class="position-header">
+                        <span class="position-title">Research Intern | Computer Vision</span>
+                        <div class="company-date">
+                            <span class="position-company">ZIPLAB, Zhejiang University</span>
+                            <span class="position-date">Jan 2025 - Present</span>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <h3 class="project-title">Token Compression Project</h3>
+                        <ul class="project-description">
+                            <li>Spearheaded token compression for open-source CognVideoX and Huawei's proprietary models</li>
+                            <li>Integrated step distillation to achieve 20× theoretical acceleration while maintaining minimal quality degradation</li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
