@@ -1,184 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XiaoLong Li's Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #0066CC; /* 蓝色，用于姓名和链接 */
+            --secondary-color: #003366; /* 深蓝色，用于标题 */
+            --text-color: #333333; /* 深灰色，用于正文 */
+            --background-color: #FFFFFF; /* 白色背景 */
+            --accent-color: #009999; /* 青色，用于链接高亮 */
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.5;
             margin: 0;
             padding: 0;
-            color: #333;
-            background-color: #f4f4f4;
         }
 
         .container {
-            width: 80%;
+            max-width: 800px;
             margin: 0 auto;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            background-color: var(--background-color);
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         .header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            align-items: center;
+            margin-bottom: 2em;
         }
 
-        .header h1 {
-            margin: 0;
+        .contact-info {
+            width: 70%;
+        }
+
+        .contact-info h1 {
+            color: var(--primary-color);
+            font-family: 'Montserrat', sans-serif;
             font-size: 2.5em;
+            margin: 0;
         }
 
-        .header p {
-            margin: 5px 0;
+        .contact-info p {
+            margin: 0.5em 0;
         }
 
-        .header a {
-            color: #0066cc;
-            text-decoration: none;
+        .photo {
+            width: 25%;
+            text-align: right;
         }
 
-        /* .header img {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-        } */
-
-        section {
-            margin-bottom: 20px;
+        .photo img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #ccc;
         }
 
-        h2 {
-            border-bottom: 2px solid #0066cc;
-            padding-bottom: 5px;
+        .section {
+            margin-bottom: 2em;
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8em;
+            margin-bottom: 0.5em;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 0.3em;
         }
 
         ul {
-            list-style: none;
-            padding: 0;
+            padding-left: 1em;
+            margin: 0;
         }
 
-        .job-title,
-        .school-name,
-        .project-title {
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        ul ul {
+            padding-left: 1.5em;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .education-entry {
+            margin-bottom: 1em;
+        }
+
+        .detail-line {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+        }
+
+        .award-title {
+            color: var(--text-color);
             font-weight: bold;
-            font-size: 1.1em;
         }
 
-        .date {
-            float: right;
-            font-style: italic;
-        }
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
 
-        .item {
-            margin-bottom: 10px;
-        }
+            .contact-info, .photo {
+                width: 100%;
+            }
 
-        .item ul {
-            margin-top: 5px;
-            padding-left: 20px;
-        }
-
-        .item ul li {
-            margin-bottom: 5px;
+            .photo {
+                margin-top: 1em;
+            }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
+        <!-- 头部信息 -->
         <div class="header">
-            <div>
+            <div class="contact-info">
                 <h1>XiaoLong Li</h1>
-                <p><a href="tel:8615836992650">+86 158 369 9250</a> | <a href="mailto:15836992650@163.com">15836992650@163.com</a> | <a href="https://github.com/xiaolong-li1">GitHub</a> |<a href="Resume_Ch.html">中文</a></p>
+                <p>
+                    <a href="mailto:15836992650@163.com"><i class="fa fa-envelope"></i> 15836992650@163.com</a> |
+                    <a href="https://github.com/xiaolong-li1"><i class="fa fa-github"></i> GitHub</a> |
+                    <a href="https://xiaolong-li1.github.io"><i class="fa fa-globe"></i> WebPage</a> |
+                    <a href="https://xiaolong-li1.github.io/Blogs/index.html"><i class="fa fa-file-text-o"></i> blog</a>
+                </p>
             </div>
-            <img src="XiaoLong.jpg" alt="XiaoLong Li's photo" style="max-width: 13%; height: auto; float: right; margin-right: 10px;margin-top: 20px; margin-bottom: 0px;">
+            <div class="photo">
+                <img src="XiaoLong.jpg" alt="XiaoLong Li">
+            </div>
         </div>
 
-
-        <section>
-            <h2>Education</h2>
-            <div class="item">
-                <div class="school-name">Harbin Institute of Technology</div>
-                <div class="date">Sep 2022 - Jun 2024(Sophomore)</div>
-                <div>B.Sc. in Artificial Intelligence; GPA: 3.833/4.00;Rank:5/47</div>
-                <div class="date">Sep 2023 - Jun 2024</div>
-                <div>Minor Degree in Statistics;</div>
+        <!-- 教育背景 -->
+        <div class="section">
+            <h2 class="section-title">Education</h2>
+            <div class="education-entry">
+                <p><strong>Harbin Institute of Technology</strong></p>
+                <div class="detail-line">
+                    <span>B.Sc. in Artificial Intelligence | GPA: 3.87/4.00</span>
+                    <span>Sep 2022 - April 2025</span>
+                </div>
+                <div class="detail-line">
+                    <span>Minor in Statistics</span>
+                    <span>Sep 2023 - April 2025</span>
+                </div>
             </div>
-        </section>
+            <div class="education-entry">
+                <p><strong>Seoul National University</strong> (Exchange Student)</p>
+                <div class="detail-line">
+                    <span>Sep 2024 - Dec 2024</span>
+                </div>
+            </div>
+        </div>
 
-        <!-- <section>
-            <h2>Skills</h2>
+        <!-- 奖项与成就 -->
+        <div class="section">
+            <h2 class="section-title">Awards & Achievements</h2>
             <ul>
-                <li><strong>Languages:</strong> C/C++, C#, Java, Python</li>
-                <li><strong>Technologies:</strong> Git, SVN, Docker, AWS, Kubernetes, GCP, Kafka, RabbitMQ, OpenCV, PyTorch, TensorFlow</li>
-                <li><strong>Methodologies:</strong> Agile, Scrum, OOP, Functional Programming, DevOps, CI/CD, TDD</li>
+                <li>
+                    <span class="award-title">Aug 2023 - National First Prize in China Robotics and Artificial Intelligence Competition</span><br>
+                    <em>Theme: Autonomous Driving using Baidu's Apollo Platform</em><br>
+                    Team leader, responsible for all planning module code development.
+                </li>
+                <li>
+                    <span class="award-title">Jun 2024 - Mu Cang Scholarship</span><br>
+                    Awarded to the top 8 students in the Faculty of Computing based on comprehensive academic performance, research competitions, and presentation skills.
+                </li>
             </ul>
-        </section> -->
+        </div>
 
-    <section>
-        <h2>Awards & Achievements</h2>
-        <ul>
-            <li>
-                <strong>Aug 2023 - National First Prize in China Robotics and Artificial Intelligence Competition:</strong> The competition theme was autonomous driving, primarily based on Baidu's Apollo platform. Participants developed and debugged autonomous driving tasks under typical urban traffic conditions. As the team leader, I was responsible for all the code related to the planning module.
-            </li>
-            <li>
-                <strong>May 2023 - People’s Scholarship:</strong> Awarded to students with high GPA rankings.
-            </li>
-            <li>
-                <strong>Jun 2024 - Mu Cang Scholarship:</strong> Awarded to the top 8 students in the Faculty of Computing based on a comprehensive evaluation of academic performance, research competitions, and presentation skills.
-            </li>
-        </ul>
-    </section>
-
-
-        <section>
-            <h2>Projects</h2>
-            <div class="item">
-                <div class="project-title"><a href="https://github.com/xiaolong-li1/SmartCafe-Checkout-System">SmartCafe-Checkout-System</a></div>
-                <ul>
-                    <li>This project aims to implement an smart dining settlement system(including food recognization and auto charging) with an extremely limited budget(500RMB)</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="project-title"><a href="../../../Blogs/Exhibition_robot/Qs.pdf">HIT Exhibition Hall robot(document for the control system)</a></div>
-                <ul>
-                    <li><a href="https://mp.weixin.qq.com/s/65hcx66gDQmghbj_ysrJqw">Click here to see our robot</a></li>
-                    <li>Our team designed a robot that can guide visitors to the exhibition hall and provide information about the exhibits. The robot can also interact with visitors and answer random questions.</li>
-                    <li>My work involves maintaining the core code related to robot action planning and interactions with the environment, as well as collecting and processing data during real-world robot interactions for the next version of our robot.</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="project-title"><a href="https://github.com/xiaolong-li1/percentile_normalization.imagej">Percentile_normalization plugin</a></div>
-                <ul>
-                    <li>This ImageJ plugin offers real-time execution of Image Percentile Normalization. Users can directly remove the ultra-strong baseline signal before training using this ready-to-use plugin.</li>
-                </ul>
-            </div>
-            <div class="item">
-                <div class="project-title"><a href="https://github.com/xiaolong-li1/wx_avatar">Avatar_decorator</a></div>
-                <ul>
-                    <li>My first attempt at creating a WeChat mini program (the image quality exported from the school's mini program was too poor... I figured out that exporting in high quality shouldn't that complicated).Then comes this project.Just for fun</li>
-                </ul>
-            </div>
-             <div class="item">
-                <div class="project-title"><a href="https://github.com/xiaolong-li1/algorithm">Algorithm</a></div>
-                <ul>
-                    <li>Some pleasant trials on the new algorithm I learn</li>
-                </ul>
-            </div>           
-        </section>
-            <section>
-            <h2>Research Experience</h2>
+        <!-- 项目经历 -->
+        <div class="section">
+            <h2 class="section-title">Projects</h2>
             <ul>
-                <li>I am looking forward to getting my first research opportunity.</li>
+                <li>
+                    <a href="https://github.com/xiaolong-li1/SparseAttnFunctions"><strong>Sparse Attention Mechanisms for CognVideoX</strong></a>
+                    <ul>
+                        <li>Developed optimized sparse attention mechanisms (windowed, block-sparse, and combined attention) for the CognVideo2B/5b video generation model, enhancing computational efficiency.</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://xiaolong-li1.github.io/Blogs/Exhibition_robot/Qs.pdf"><strong>HIT Exhibition Hall Robot (Control System Documentation)</strong></a>
+                    <ul>
+                        <li>Designed a robot to guide visitors and provide exhibit information, capable of interacting and answering questions. <a href="https://mp.weixin.qq.com/s/65hcx66gDQmghbj_ysrJqw" style="color: var(--accent-color);">click here to see our robot</a></li>
+                        <li>Maintained core code for robot action planning and environmental interactions, handled data collection and processing for iterative improvements.</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://github.com/xiaolong-li1/percentile_normalization.imagej"><strong>Percentile_Normalization Plugin</strong></a>
+                    <ul>
+                        <li>Developed an ImageJ plugin for real-time Image Percentile Normalization, enabling users to remove strong baseline signals prior to training.</li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="https://github.com/xiaolong-li1/SmartCafe-Checkout-System"><strong>SmartCafe Checkout System</strong></a>
+                    <ul>
+                        <li>Developed a smart dining settlement system with food recognition and automatic charging within a budget of 500 RMB.</li>
+                    </ul>
+                </li>
             </ul>
-        </section>
+        </div>
+
+        <!-- 技能 -->
+        <div class="section">
+            <h2 class="section-title">Skills</h2>
+            <ul>
+                <li><strong>Programming:</strong> CUDA programming, multithread programming, HLS, PyTorch.</li>
+                <li><strong>Deep Learning:</strong> Experience in training and deploying deep learning models.</li>
+                <li><strong>Soft Skills:</strong> Demonstrates great patience and focus in all projects I get involved.</li>
+            </ul>
+        </div>
+
+        <!-- 研究经历 -->
+        <div class="section">
+            <h2 class="section-title">Research Experience</h2>
+            <ul>
+                <li><strong>ZIPLAB:</strong> Spearheaded token compression for open-source CogVideoX and Huawei's proprietary models, integrating step distillation to achieve 20× theoretical acceleration while maintaining minimal quality degradation.</li>
+            </ul>
+        </div>
     </div>
 </body>
 </html>
